@@ -5,8 +5,6 @@ iptables -P INPUT DROP
 iptables -P OUTPUT DROP
 iptables -P FORWARD DROP
 
-
-
 iptables -N INPUT-ACCEPT
 iptables -N INPUT-DROP
 iptables -N OUTPUT-ACCEPT
