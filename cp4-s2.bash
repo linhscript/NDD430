@@ -48,8 +48,8 @@ iptables -A INPUT -p tcp -s 195.165.17.0/26 --dport 3737 -m state --state NEW,ES
 iptables -A OUTPUT -p tcp -d 195.165.17.0/26 --sport 3737 -m state --state ESTABLISHED,RELATED -j OUTPUT-ACCEPT
 
 #SSH/SCP to Server
-iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 7373 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-ACCEPT
-iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 7373 -m state --state ESTABLISHED,RELATED -j FORWARD-ACCEPT
+iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 7373 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-DROP
+iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 7373 -m state --state ESTABLISHED,RELATED -j FORWARD-DROP
 
 #IIS 
 iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 2424 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-ACCEPT
@@ -58,6 +58,14 @@ iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 2424 -m state --state ESTA
 #Apache 
 iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 4242 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-ACCEPT
 iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 4242 -m state --state ESTABLISHED,RELATED -j FORWARD-ACCEPT
+
+#HMAIL IMAP
+iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 143 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-DROP
+iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 143 -m state --state ESTABLISHED,RELATED -j FORWARD-DROP
+
+#HMAIL SMTP 
+iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 25 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-DROP
+iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 25 -m state --state ESTABLISHED,RELATED -j FORWARD-DROP
 
 #MySQL 
 iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 3306 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-ACCEPT
@@ -75,3 +83,8 @@ iptables -A OUTPUT -p udp --sport 67:68 -m state --state NEW,ESTABLISHED,RELATED
 iptables -A FORWARD -p udp --dport 67:68 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-ACCEPT
 iptables -A FORWARD -p udp --sport 67:68 -m state --state ESTABLISHED,RELATED -j FORWARD-ACCEPT
 
+#FTP UNENCRYPTED
+iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 21 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-DROP
+iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 21 -m state --state ESTABLISHED,RELATED -j FORWARD-DROP
+iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 20 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-DROP
+iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 20 -m state --state ESTABLISHED,RELATED -j FORWARD-DROP 

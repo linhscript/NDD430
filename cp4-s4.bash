@@ -51,6 +51,18 @@ iptables -A OUTPUT -p tcp -d 195.165.17.0/26 --sport 3737 -m state --state ESTAB
 iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 7373 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-ACCEPT
 iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 7373 -m state --state ESTABLISHED,RELATED -j FORWARD-ACCEPT
 
+#HMAIL IMAP
+iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 143 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-DROP
+iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 143 -m state --state ESTABLISHED,RELATED -j FORWARD-DROP
+
+#HMAIL SMTP 
+iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 25 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-DROP
+iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 25 -m state --state ESTABLISHED,RELATED -j FORWARD-DROP
+
+#MySQL 
+iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 3306 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-DROP
+iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 3306 -m state --state ESTABLISHED,RELATED -j FORWARD-DROP
+
 #DNS
 iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 53 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-ACCEPT
 iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 53 -m state --state ESTABLISHED,RELATED -j FORWARD-ACCEPT

@@ -43,6 +43,14 @@ iptables -A FORWARD-DROP -j LOG --log-prefix "FORWARD-DROPPED"
 iptables -A FORWARD-DROP -j DROP
 
 
+#SSH/SCP to Router
+iptables -A INPUT -p tcp -s 195.165.17.0/26 --dport 3737 -m state --state NEW,ESTABLISHED,RELATED -j INPUT-DROP
+iptables -A OUTPUT -p tcp -d 195.165.17.0/26 --sport 3737 -m state --state ESTABLISHED,RELATED -j OUTPUT-DROP
+
+#SSH/SCP to Server
+iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 7373 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-ACCEPT
+iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 7373 -m state --state ESTABLISHED,RELATED -j FORWARD-ACCEPT
+
 #IIS 
 iptables -A FORWARD -p tcp -s 195.165.17.0/26 --dport 2424 -m state --state NEW,ESTABLISHED,RELATED -j FORWARD-ACCEPT
 iptables -A FORWARD -p tcp -d 195.165.17.0/26 --sport 2424 -m state --state ESTABLISHED,RELATED -j FORWARD-ACCEPT
